@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
@@ -14,14 +15,21 @@
                 <div class="col-md-12">
                     <div class="card px-3">
                         <div class="card-body">
-                            <h4 class="card-title">Awesome Todo list</h4>
+                            <h4 class="card-title">Todo list</h4>
                             <form class="add-items d-flex">
                                 <input name="todo" type="text" class="form-control todo-list-input" placeholder="What do you need to do today?">
                                 <button class="add btn btn-primary font-weight-bold todo-list-add-btn">Add</button>
                             </form>
+                            <div class="select__wrapper">
+                                <select id="user-todo" name="user" class="user-select-control">
+                                    <option disabled selected>select user</option>
+                                </select>
+                                <div class="button_user">
+                                    <button class="add btn btn-primary font-weight-bold todo-list-add-btn" id="newUserBtn">Add</button>
+                                </div>
+                            </div>
                             <div class="list-wrapper">
                                 <ul class="d-flex flex-column-reverse todo-list">
-                    
                                 </ul>
                             </div>
                         </div>
@@ -30,6 +38,12 @@
             </div>
         </div>
     </div>
+    <div id="myModal" class="usermodal hidden">
+        <input name="todo" type="text" class="form-control todo-list-input" placeholder="Print new user name">
+        <button class="add btn btn-primary font-weight-bold newUserAddBtn">Add</button>
+    </div>
+    <script src="./requests.js"></script>
+    <script src="./modal.js"></script>
     <script src="./app.js"></script>
 </body>
 </html>

@@ -96,6 +96,27 @@ body {
     border-radius: 2px;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+.user-select-control {
+    border: 1px solid #f3f3f3;
+    font-weight: 400;
+    font-size: 0.875rem;
+    display: block;
+    width: 30%;
+    height: 38px;
+    padding: 0.275rem 1.375rem;
+    font-size: 1rem;
+    line-height: 1;
+    color: #495057;
+    background-color: #ffffff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 2px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-bottom: 20px;
+}
+
+
+
 .add-items .btn {
     margin-left: .5rem;
 }
@@ -107,7 +128,13 @@ body {
     padding: .7rem 1.5rem;
     border-radius: 0.1275rem;
 }
-
+.select__wrapper {
+    display: flex;
+    column-gap: 10px;
+}
+.user__select-button {
+    height: 50px;
+}
 .list-wrapper {
     height: 100%;
     max-height: 100%;
@@ -382,9 +409,7 @@ input[type="checkbox"] {
     margin-left: auto !important;
 }
 
-.mdi-close-circle-outline:before {
-    content: "\F15A";
-}
+
 
 .list-wrapper ul li {
     font-size: .9375rem;
@@ -429,4 +454,30 @@ input[type="checkbox"] {
 .navbar .navbar-menu-wrapper .navbar-nav .nav-item.nav-profile,
 .navbar .navbar-menu-wrapper .navbar-nav .nav-item.dropdown .navbar-dropdown .dropdown-item {
     display: flex !important;
+}
+
+.usermodal {
+    display: flex;
+    flex-direction: column;
+    row-gap: 25px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    border: 1px solid #000000;
+    transform: translate(-50%, -50%);
+    background-color: rgb(244, 243, 243);
+    padding: 100px;
+    border-radius: 10px;
+    color: white;
+}
+.newUserAddBtn {
+    width: 30%;
+    align-self: center;
+}
+.blur {
+    filter: blur(5px); /* Регулируйте значение, чтобы увеличивать или уменьшать степень размытия */
+    transition: 0.3s ease-in;
+}
+.hidden {
+    display: none;
 }

@@ -1,44 +1,36 @@
-
-
-
 const toDoInput = document.querySelector('.todo-list-input')
 const btn = document.querySelector('.todo-list-add-btn')
 const toDoList = document.querySelector('.todo-list')
-const removeBtn = document.querySelectorAll('.remove');
-removeBtn.forEach(btn => btn.addEventListener('click', removeToDo));
 const todoForm = document.querySelector('.add-items');
+const userSelect = document.getElementById('user-todo');
+const newUserBtn = document.getElementById('newUserBtn');
 todoForm.addEventListener('submit', handleSubmit)
 document.addEventListener('DOMContentLoaded', initApp);
+newUserBtn.addEventListener('click', openModal);
+document.addEventListener('keydown', closeModal);
 let users = [];
 let todos = [];
 
-function removeToDo() {
-    const listItem = this.parentNode;
-    listItem.remove();
+function getUserName(userId) {
+    const user = users.find(u => u.id === userId); // получение имени пользователя по id 
+    return user.name;    //добавить определение пользователя в функцию ниже
 }
+
 function printToDo(id, userId, title, completed) {
     const li = document.createElement('li')
-    li.innerHTML = `<div class="form-check"> <label class="form-check-label"> <input class="checkbox" type="checkbox"> ${title} <i class="input-helper"></i></label> </div> <i class="remove mdi mdi-close-circle-outline"></i>`;
-    li.querySelector('.remove').addEventListener('click', removeToDo);
+    li.dataset.id = id;
+    li.innerHTML = `<div class="form-check"> <label class="form-check-label"> <input class="checkbox" type="checkbox"> ${title} by ${getUserName(userId)} <span class="input-helper"></span></label> </div> <i class="remove mdi mdi-close-circle-outline"></i>`;
+   
 
     const status = li.querySelector('.checkbox');
     status.checked = completed;
     status.addEventListener('change', handleStatusChange)
 
+    const close = li.querySelector('.remove');
+    close.addEventListener('click', handleDeleteTodo)
 
     toDoList.append(li)
-    toDoInput.value = ''; //дописать функцию с учетом пропсов, добавить функцию, которая определяет id пользователя
-}
-
-async function getAllTodos() {
-    const response = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=10');
-    const data = await response.json();
-    return data;
-}
-async function getAllUsers() {
-    const response = await fetch('https://jsonplaceholder.typicode.com/users');
-    const data = await response.json();
-    return data;
+    toDoInput.value = '';
 }
 
 async function initApp() {
@@ -49,62 +41,53 @@ async function initApp() {
     todos.forEach(todo => {
         printToDo(todo.id, todo.userId, todo.title, todo.completed);
     });
-} 
-async function createTodo(todo) {
-    const response = await fetch('https://jsonplaceholder.typicode.com/todos', {
-        method: 'POST',
-        body: JSON.stringify(todo),
-        headers: {
-            'Content-type': 'application/json',
-        }
+    users.forEach(user => {
+        createUserOption(user.id, user.name)
     });
-    try {
-        if (response.ok) {
-            console.log('New todo is created');
-            const newTodo = await response.json();
-            return newTodo;
-        } else {
-            console.log("Failed to create new todo")
-        }
-    } catch (error) {
-        console.error('an error:', error)
-    } 
-}
+} 
 
 async function handleSubmit(evt) {
     evt.preventDefault()
-
-    const newTodoData = {
-        title: toDoInput.value,
-        completed: false,
-    };
-    const newTodo = await createTodo(newTodoData)
-    toDoInput.value = '';
-    console.log(newTodo)
-    printToDo(1, 1, newTodo.title, newTodo.completed)
+    if (toDoInput.value !== "") { //добавить проверку пользователя
+        const newTodoData = {
+            title: toDoInput.value,
+            userId: Number(userSelect.value),
+            completed: false,
+        };
+        const newTodo = await createTodo(newTodoData)
+        toDoInput.value = '';
+        console.log(newTodo)
+        printToDo(newTodo.id, newTodo.userId, newTodo.title, newTodo.completed)
+    } else {
+        alert('Print new todo')
+    }
 }
-
 
 function handleStatusChange() {
     const todoId = this.parentElement.dataset.id;
     const completed = this.checked;
     toggleTodoComplete(todoId, completed)
 }
-async function toggleTodoComplete(todoId, completed) {
-    const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${todoId}`, {
-        method: 'PATCH',
-        body: JSON.stringify({completed}),
-        headers: {
-            'Content-type': 'application/json',
-        }
-    })
-    try {
-        if (response.ok) {
-            console.log('Status changed succesfully');
-        } else {
-            console.log("Status isn't changed")
-        }
-    } catch (error) {
-        console.error('an error:', error)
+
+//deletion
+function handleDeleteTodo() {
+    const todoId = this.parentElement.dataset.id;
+    
+    if (deleteTodo(todoId)) {
+        removeTodo(todoId);
     }
-}  
+    }
+    function removeTodo(todoId) {
+        todos = todos.filter(el => parseInt(el.id) !== parseInt(todoId));
+        const todo = document.querySelector(`[data-id='${todoId}']`)
+        todo.remove(); 
+    }
+
+    function createUserOption(userId, userName) {
+        const option = document.createElement('option');
+        option.value = userId;
+        option.innerText = userName;
+    
+        userSelect.append(option)
+    }
+    

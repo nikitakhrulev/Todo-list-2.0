@@ -1,6 +1,13 @@
-export {toggleTodoComplete, createTodo}
-
-
+async function getAllTodos() {
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=10');
+    const data = await response.json();
+    return data;
+}
+async function getAllUsers() {
+    const response = await fetch('https://jsonplaceholder.typicode.com/users');
+    const data = await response.json();
+    return data;
+}
 
 async function toggleTodoComplete(todoId, completed) {
     const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${todoId}`, {
@@ -41,4 +48,22 @@ async function createTodo(todo) {
     } catch (error) {
         console.error('an error:', error)
     } 
+}
+async function deleteTodo(todoId) {
+    try {
+        const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${todoId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json',
+            } 
+        });
+        if (response.ok) { 
+            console.log('Deleted successfully');
+        } else {
+            console.error('Failed to delete')
+        }
+    }
+    catch (error) {
+        console.error('An error occured:', error)
+    }
 }
