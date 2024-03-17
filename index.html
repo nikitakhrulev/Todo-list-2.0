@@ -15,17 +15,18 @@
                 <div class="col-md-12">
                     <div class="card px-3">
                         <div class="card-body">
-                            <h4 class="card-title">Todo list</h4>
+                            <h4 class="card-title">Todo List</h4>
                             <form class="add-items d-flex">
                                 <input name="todo" type="text" class="form-control todo-list-input" placeholder="What do you need to do today?">
                                 <button class="add btn btn-primary font-weight-bold todo-list-add-btn">Add</button>
                             </form>
                             <div class="select__wrapper">
                                 <select id="user-todo" name="user" class="user-select-control">
-                                    <option disabled selected>select user</option>
+                                    <option disabled selected value='start'>select user</option>
+                                    <option value="choose">---Add new user---</option>
                                 </select>
                                 <div class="button_user">
-                                    <button class="add btn btn-primary font-weight-bold todo-list-add-btn" id="newUserBtn">Add</button>
+                                    <button class="add btn btn-primary font-weight-bold todo-list-add-btn" id="newUserBtn">+</button>
                                 </div>
                             </div>
                             <div class="list-wrapper">
@@ -39,8 +40,11 @@
         </div>
     </div>
     <div id="myModal" class="usermodal hidden">
-        <input name="todo" type="text" class="form-control todo-list-input" placeholder="Print new user name">
-        <button class="add btn btn-primary font-weight-bold newUserAddBtn">Add</button>
+        <input name="todo" type="text" class="form-control todo-list-input" id="newUserInput" placeholder="Print new user name">
+        <div class="modal__buttons">
+            <button class="add btn btn-primary font-weight-bold newUserAddBtn">Add new</button>
+            <button class="closeModalBtn">Cancel</button>
+        </div>
     </div>
     <script src="./requests.js"></script>
     <script src="./modal.js"></script>

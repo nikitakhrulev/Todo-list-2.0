@@ -1,5 +1,5 @@
 async function getAllTodos() {
-    const response = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=10');
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos?');
     const data = await response.json();
     return data;
 }
@@ -67,3 +67,23 @@ async function deleteTodo(todoId) {
         console.error('An error occured:', error)
     }
 }
+
+async function postNewUser(user) {
+    try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/users', {
+            method: 'POST',
+            body: JSON.stringify(user),
+            headers: {
+                'Content-type': 'application/json',
+            }   
+        })
+        if (response.ok) {
+            console.log('New user created')
+        } else {
+            console.error('Failed to create new user')
+        }
+    } catch (error) {
+        console.error('An error occured:', error)
+    }
+}
+    

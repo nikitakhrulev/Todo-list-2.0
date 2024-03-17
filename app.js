@@ -8,6 +8,14 @@ todoForm.addEventListener('submit', handleSubmit)
 document.addEventListener('DOMContentLoaded', initApp);
 newUserBtn.addEventListener('click', openModal);
 document.addEventListener('keydown', closeModal);
+const selectInitialValue = userSelect.value;
+userSelect.addEventListener('change', function(evt) {
+    if (evt.target.value === 'choose') {
+        modal.classList.remove('hidden');
+        pageContent.classList.add('blur');
+        userSelect.value = selectInitialValue;
+    }
+})
 let users = [];
 let todos = [];
 
@@ -19,7 +27,7 @@ function getUserName(userId) {
 function printToDo(id, userId, title, completed) {
     const li = document.createElement('li')
     li.dataset.id = id;
-    li.innerHTML = `<div class="form-check"> <label class="form-check-label"> <input class="checkbox" type="checkbox"> ${title} by ${getUserName(userId)} <span class="input-helper"></span></label> </div> <i class="remove mdi mdi-close-circle-outline"></i>`;
+    li.innerHTML = `<div class="form-check"> <label class="form-check-label"> <input class="checkbox" type="checkbox"> ${title} by   ${getUserName(userId)} <span class="input-helper"></span></label> </div> <i class="remove mdi mdi-close-circle-outline"></i>`;
    
 
     const status = li.querySelector('.checkbox');
@@ -45,22 +53,27 @@ async function initApp() {
         createUserOption(user.id, user.name)
     });
 } 
-
+function checkInput() {
+    if (toDoInput.value === "" || userSelect.value === 'select user') {
+        alert('Fill all fields')
+    } else {
+        return true
+    }
+}
 async function handleSubmit(evt) {
     evt.preventDefault()
-    if (toDoInput.value !== "") { //добавить проверку пользователя
+    if (checkInput()) {
+        //добавить проверку пользователя
         const newTodoData = {
             title: toDoInput.value,
             userId: Number(userSelect.value),
             completed: false,
-        };
+          };
         const newTodo = await createTodo(newTodoData)
         toDoInput.value = '';
         console.log(newTodo)
         printToDo(newTodo.id, newTodo.userId, newTodo.title, newTodo.completed)
-    } else {
-        alert('Print new todo')
-    }
+    }     
 }
 
 function handleStatusChange() {
