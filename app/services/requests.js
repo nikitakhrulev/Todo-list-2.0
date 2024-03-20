@@ -19,12 +19,14 @@ async function toggleTodoComplete(todoId, completed) {
     })
     try {
         if (response.ok) {
+            notificationSuccess('Status changed')
             console.log('Status changed succesfully');
         } else {
             console.log("Status isn't changed")
         }
     } catch (error) {
         console.error('an error:', error)
+        notificationError('change status')
     }
 }  
 
@@ -40,6 +42,7 @@ async function createTodo(todo) {
     try {
         if (response.ok) {
             console.log('New todo is created');
+            notificationSuccess('New todo created')
             const newTodo = await response.json();
             return newTodo;
         } else {
@@ -47,6 +50,7 @@ async function createTodo(todo) {
         }
     } catch (error) {
         console.error('an error:', error)
+        notificationError('create new todo')
     } 
 }
 async function deleteTodo(todoId) {
@@ -58,13 +62,15 @@ async function deleteTodo(todoId) {
             } 
         });
         if (response.ok) { 
-            console.log('Deleted successfully');
+            notificationSuccess('Todo deleted')
+            console.log('Todo deleted successfully');
         } else {
             console.error('Failed to delete')
         }
     }
     catch (error) {
         console.error('An error occured:', error)
+        notificationError('delete')
     }
 }
 
@@ -78,12 +84,14 @@ async function postNewUser(user) {
             }   
         })
         if (response.ok) {
+            notificationSuccess('New user created')
             console.log('New user created')
         } else {
             console.error('Failed to create new user')
         }
     } catch (error) {
         console.error('An error occured:', error)
+        notificationError('create new user')
     }
 }
     

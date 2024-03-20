@@ -3,6 +3,7 @@ const pageContent = document.querySelector('.page-container');
 const newUserInput = document.getElementById('newUserInput');
 const userAddBtn = document.querySelector('.newUserAddBtn');
 const closeModalBtn = document.querySelector('.closeModalBtn');
+document.addEventListener('keydown', closeModal);
 userAddBtn.addEventListener('click', handleUserSubmit);
 closeModalBtn.addEventListener('click', userCreated)
 
