@@ -1,3 +1,6 @@
+
+
+
 function printToDo(id, userId, title, completed) {
     const li = document.createElement('li')
     li.dataset.id = id;
@@ -10,7 +13,6 @@ function printToDo(id, userId, title, completed) {
 
     const close = li.querySelector('.remove');
     close.addEventListener('click', handleDeleteTodo)
-
     toDoList.append(li)
     toDoInput.value = '';
     userSelect.value = selectInitialValue;

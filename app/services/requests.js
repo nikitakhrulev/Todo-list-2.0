@@ -1,3 +1,5 @@
+
+
 async function getAllTodos() {
     const response = await fetch('https://jsonplaceholder.typicode.com/todos?');
     const data = await response.json();
@@ -73,7 +75,7 @@ async function deleteTodo(todoId) {
         notificationError('delete')
     }
 }
-
+// 'https://todo-list-8ae56-default-rtdb.europe-west1.firebasedatabase.app/users'
 async function postNewUser(user) {
     try {
         const response = await fetch('https://jsonplaceholder.typicode.com/users', {
@@ -94,4 +96,3 @@ async function postNewUser(user) {
         notificationError('create new user')
     }
 }
-    

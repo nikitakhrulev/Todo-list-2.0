@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
         removePreloader(); 
     }, 2000); 
 });
-
+// if (document.readyState === "loading")
 
 
 function removePreloader() {

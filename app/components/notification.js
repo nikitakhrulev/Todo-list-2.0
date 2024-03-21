@@ -4,3 +4,4 @@ function notificationSuccess(props) {
 function notificationError(props) {
     toastr.error(`Failed to ${props}`);
 }
+
